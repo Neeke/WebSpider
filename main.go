@@ -10,8 +10,8 @@ func main() {
 	start := time.Now()
 	fmt.Println("start...")
 
-	lea := spider.NewWebSpider()
-	lea.Fetch("http://image.baidu.com/channel/index", "testpath")
+	spider := spider.NewWebSpider()
+	spider.Fetch("http://image.baidu.com/channel/index", "testpath")
 
 	fmt.Printf("time cost %v\n", time.Now().Sub(start))
 }

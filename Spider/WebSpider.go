@@ -15,8 +15,8 @@ import (
 type WebSpider struct {
 	indexUrl           string
 	scheme             string // http:// 或 https://
-	host               string // www.lealife.com lealife.com
-	schemeAndHost      string // http://lealife.com
+	host               string // www.baidu.com
+	schemeAndHost      string // http://baidu.com
 	targetPath         string
 	noChildrenFileExts []string
 	hadDoneUrl         map[string]bool
@@ -33,19 +33,19 @@ type WebSpider struct {
 
 // 实例化WebSpider
 func NewWebSpider() *WebSpider {
-	lea := &WebSpider{
+	spider := &WebSpider{
 		targetPath:         "D:",
 		defaultFilename:    "index.html",
 		t:                  1,
 		goroutineNum:       0,
 		lock:               &sync.Mutex{},
 		noChildrenFileExts: []string{".js", ".ico", ".png", ".jpg", ".gif"}}
-	lea.ch = make(chan bool, 1000) // 仅limit个goroutine
-	lea.hadDoneUrl = make(map[string]bool, 1000)
-	lea.exceptionUrl = make(map[string]bool, 1000)
+	spider.ch = make(chan bool, 1000) // 仅limit个goroutine
+	spider.hadDoneUrl = make(map[string]bool, 1000)
+	spider.exceptionUrl = make(map[string]bool, 1000)
 
-	lea.setLogOutputWriter()
-	return lea
+	spider.setLogOutputWriter()
+	return spider
 }
 
 // 入口
@@ -484,7 +484,7 @@ func (this *WebSpider) parseUrl(url string) {
 		this.scheme = "https://"
 	}
 
-	// http://lealife.com/b/c
+	// http://baidu.com/b/c
 	url = strings.Replace(url, this.scheme, "", 1)
 	index := strings.Index(url, "/")
 	if index == -1 {
